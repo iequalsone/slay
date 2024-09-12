@@ -1,16 +1,24 @@
-[gd_scene load_steps=14 format=3 uid="uid://b80itxv3um4vb"]
+[gd_scene load_steps=18 format=3 uid="uid://b80itxv3um4vb"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6orm4"]
-[ext_resource type="Texture2D" uid="uid://bm8vciu1bwlsf" path="res://art/playerGrey_up1.png" id="1_14bdj"]
-[ext_resource type="Texture2D" uid="uid://c57oaodfahbus" path="res://art/playerGrey_up2.png" id="2_dko2p"]
 [ext_resource type="Texture2D" uid="uid://cgw5kyufp6pci" path="res://art/main_character/idle/idle_0.png" id="2_occy7"]
 [ext_resource type="Texture2D" uid="uid://dt1aoeib8pg5j" path="res://art/main_character/idle/idle_1.png" id="3_1g4ph"]
-[ext_resource type="Texture2D" uid="uid://bao53qj7h3e7p" path="res://art/playerGrey_walk1.png" id="3_73viq"]
 [ext_resource type="Texture2D" uid="uid://b8l2ef0lcoos1" path="res://art/main_character/idle/idle_2.png" id="4_g5r76"]
-[ext_resource type="Texture2D" uid="uid://bvh6v08uhud3r" path="res://art/playerGrey_walk2.png" id="4_jp6c7"]
 [ext_resource type="Texture2D" uid="uid://d2dafkjtgbvxc" path="res://art/main_character/idle/idle_3.png" id="5_0ghr1"]
 [ext_resource type="Texture2D" uid="uid://cyylo26vi4ys6" path="res://art/main_character/idle/idle_4.png" id="6_vltsd"]
 [ext_resource type="Texture2D" uid="uid://d0qitnvstyysv" path="res://art/main_character/idle/idle_5.png" id="7_32ki5"]
+[ext_resource type="Texture2D" uid="uid://byf4rbvvvmeq0" path="res://art/main_character/walk/walk_0.png" id="8_ss18j"]
+[ext_resource type="Texture2D" uid="uid://bho7pbgajyc6o" path="res://art/main_character/walk/walk_1.png" id="9_q1j5d"]
+[ext_resource type="Texture2D" uid="uid://cuv31yb6peycx" path="res://art/main_character/walk/walk_2.png" id="10_2o55b"]
+[ext_resource type="Texture2D" uid="uid://t2hdsjxp1igb" path="res://art/main_character/walk/walk_3.png" id="11_cxdki"]
+[ext_resource type="Texture2D" uid="uid://dp650ttnglsis" path="res://art/main_character/walk/walk_4.png" id="12_d0cip"]
+[ext_resource type="Texture2D" uid="uid://dgtghcdvc4or1" path="res://art/main_character/walk/walk_5.png" id="13_xc3lq"]
+[ext_resource type="Texture2D" uid="uid://dy7qfydo6bp2x" path="res://art/main_character/walk/walk_6.png" id="14_j6oif"]
+[ext_resource type="Texture2D" uid="uid://6pqd517lfv71" path="res://art/main_character/walk/walk_7.png" id="15_4v8xl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8u2qe"]
+radius = 24.0
+height = 62.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gl2as"]
 animations = [{
@@ -35,47 +43,53 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_14bdj")
+"texture": ExtResource("8_ss18j")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_dko2p")
-}],
-"loop": true,
-"name": &"up",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_73viq")
+"texture": ExtResource("9_q1j5d")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_jp6c7")
+"texture": ExtResource("10_2o55b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cxdki")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_d0cip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_xc3lq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_j6oif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_4v8xl")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 8.0
 }]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8u2qe"]
-radius = 27.0
-height = 68.0
 
 [node name="Player" type="Area2D"]
 collision_layer = 2
 script = ExtResource("1_6orm4")
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_gl2as")
-animation = &"idle"
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_8u2qe")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -40)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_gl2as")
+animation = &"walk"
+frame_progress = 0.802313
 
 [node name="ProjectileContainer" type="Node" parent="."]
 
