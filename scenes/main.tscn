@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://chmjxgxj3o3c7"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_giyrj"]
+[ext_resource type="PackedScene" uid="uid://b80itxv3um4vb" path="res://scenes/player.tscn" id="2_eq74j"]
+[ext_resource type="PackedScene" uid="uid://6npcdy13y7q1" path="res://scenes/mob.tscn" id="2_i2mq8"]
+[ext_resource type="Texture2D" uid="uid://crtlw8s6alj4t" path="res://art/Purple.png" id="3_ttmcc"]
+[ext_resource type="PackedScene" uid="uid://dxhyyf0vq6xui" path="res://scenes/hud.tscn" id="4_bttsc"]
+[ext_resource type="Script" path="res://scripts/camera_2d.gd" id="6_yhuoo"]
+
+[sub_resource type="Curve2D" id="Curve2D_jugud"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 712, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_giyrj")
+mob_scene = ExtResource("2_i2mq8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.152757, 0.538232, 0.612824, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ttmcc")
+stretch_mode = 1
+
+[node name="Player" parent="." instance=ExtResource("2_eq74j")]
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 450)
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_jugud")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+
+[node name="HUD" parent="." instance=ExtResource("4_bttsc")]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("6_yhuoo")
+
+[node name="Timer" type="Timer" parent="Camera2D"]
+
+[connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="timeout" from="Camera2D/Timer" to="Camera2D" method="_on_timer_timeout"]
